@@ -224,15 +224,20 @@ export default function App() {
     setLoading(true);
 
     try {
-      // First try relative /api/predict (handled by Vite proxy across any device on network)
+      const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.startsWith('192.168.');
+      const primaryEndpoint = isLocalHost ? '/api/predict' : 'https://renalcare-backend-gojn.onrender.com/api/predict';
+
       let response;
       try {
-        response = await fetch('/api/predict', {
+        response = await fetch(primaryEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)
         });
       } catch (proxyErr) {
+        if (!isLocalHost) {
+          throw proxyErr;
+        }
         // Fallback to direct host IP port 5000 if proxy isn't reached
         const host = window.location.hostname || '127.0.0.1';
         response = await fetch(`http://${host}:5000/api/predict`, {

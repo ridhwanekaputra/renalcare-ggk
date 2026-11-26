@@ -225,7 +225,7 @@ export default function App() {
 
     try {
       const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.startsWith('192.168.');
-      const primaryEndpoint = isLocalHost ? '/api/predict' : 'https://renalcare-backend-gojn.onrender.com/api/predict';
+      const primaryEndpoint = '/api/predict';
 
       let response;
       try {

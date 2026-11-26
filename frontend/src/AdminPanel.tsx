@@ -307,24 +307,7 @@ export default function AdminPanel({
     setPingStatus('checking');
     const startTime = performance.now();
     try {
-      // Send a lightweight test request
-      const response = await fetch('/api/predict', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: "Ping Test",
-          age: "30",
-          gender: "Laki-laki",
-          hb: "14",
-          cholesterol: "180",
-          bmi: "22",
-          bp: "120",
-          ureum: "25",
-          creatinine: "0.9",
-          gdp: "90",
-          g2h: "120"
-        })
-      });
+      const response = await fetch('/api/predict', { method: 'GET' });
       const endTime = performance.now();
       if (response.ok) {
         setPingStatus('online');
